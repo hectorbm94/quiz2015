@@ -3,7 +3,7 @@ var models = require('../models/models.js');
 // GET /quizes/
 exports.index = function(req, res) {
    models.Quiz.findAll().then(function(quizes){
-     res.render('quizes/index.ejs', {quizes: quizes});
+     res.render('quizes/index', {quizes: quizes});
    })
 };
 
@@ -27,6 +27,15 @@ exports.answer = function(req, res) {
    }) 
 };
 
+// GET /quizes/search
+exports.busqueda = function(req, res) {
+  models.Quiz.findAll().then(function(quizes){
+     res.render('quizes/busqueda', {quizes: quizes});
+  })
+
+};
+
+// GET /quizes/creditos
 exports.author = function(req, res) {
   res.render('quizes/author');
 };

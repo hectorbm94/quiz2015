@@ -27,6 +27,15 @@ exports.answer = function(req, res) {
    }) 
 };
 
+// GET /quizes/search
+exports.busqueda = function(req, res) {
+  models.Quiz.findAll().then(function(quizes){
+     res.render('quizes/busqueda', {quizes: quizes, busqueda:req.query.busqueda});
+  })
+
+};
+
+// GET /quizes/creditos
 exports.author = function(req, res) {
   res.render('quizes/author');
 };

@@ -13,5 +13,7 @@ router.get('/quizes/:quizId(\\d+)',   quizController.show);
 router.get('/quizes/:quizId(\\d+)/answer', quizController.answer);
 router.get('/quizes/author',   quizController.author);
 
+// Busqueda
+router.get('/search', quizController.busqueda);
 
 module.exports = router;
