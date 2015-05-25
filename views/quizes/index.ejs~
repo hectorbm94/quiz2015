@@ -5,6 +5,6 @@
 </table>
 <form method="get" action="/search">        
   <p>Búsqueda de preguntas: </p>
-  <input type="text" name="search" placeholder="Búsqueda"/>
+  <input type="text" name="busqueda" placeholder="Búsqueda"/>
   <input type="submit" value="Enviar">
 </form>
