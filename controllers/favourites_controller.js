@@ -1,6 +1,6 @@
 var models = require('../models/models.js');
 
-// Autoload :id
+/*// Autoload :id
 exports.load = function(req, res, next, userId,quizId) {
 	models.User.find({
 		where: {
@@ -13,34 +13,36 @@ exports.load = function(req, res, next, userId,quizId) {
 			next();
 		} else{next(new Error('No existe userId=' + userId))}
 	}).catch(function(error){next(error)});	
-};
+};*/
 
 // GET /users/:userId/favourites
-exports.index = function(req, res) {  
-  var options = {};
-  if (req.session.user) {
-    options.where = {UserId:req.user.id}
-  }
-   models.Favourites.findAll(options).then(
-     function(quizes) {
-       res.render('quizes/index.ejs', {quizes: quizes, errors: []})});
+exports.index = function(req, res, next) {  
+  models.Favourites.findAll({
+		where: {UserId: Number(req.session.user.id)}
+  }).then(function(favs){
+  var options = [];
+  var i;
+  for (i=0; i<favs.length; i++){
+	options[i] = favs[i].QuizId;
+  };
+  models.Quiz.findAll({
+	where: {id: options}
+  }).then(function(quizes) {
+       res.render('favourites/index', {quizes: quizes, errors: []});
+  }).catch(function(error){next(error);});
+ }).catch(function(error){next(error);});
 };
 
 // DELETE
 exports.delete = function(req, res){
-	models.Favourites.destroy({where:{ UserId: Number(req.user.id), QuizId: Number(req.quiz.id) }});
+	models.Favourites.destroy({where:{ UserId: req.session.user.id, QuizId: req.params.quizId}});
 	res.redirect("/quizes");
 };
 
 //FAV
 exports.fav = function(req, res){
-     var options = {};
-     options.where = {id:req.quiz.id}
-     models.Quiz.findAll(options).then(
-     function(quiz) {
 	var fav = models.Favourites.build(	//crea objeto fav
-    	{UserId: req.user.id, QuizId:quiz[0].id, pregunta: quiz[0].pregunta}
-     );
-  fav.save().then( function(){res.redirect('/quizes')})
-     });
+    	{UserId: req.session.user.id, QuizId:req.params.quizId}
+        );
+     fav.save().then( function(){res.redirect('/quizes')});
 };
