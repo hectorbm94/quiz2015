@@ -34,6 +34,13 @@ var Quiz = sequelize.import(quiz_path);
 var user_path = path.join(__dirname,'user');
 var User = sequelize.import(user_path);
 
+// tabla favourite
+var favourite_path = path.join(__dirname,'favourite');
+var Favourite = sequelize.import(favourite_path);
+
+User.belongsToMany(Quiz, {through: 'Favourite'});
+Quiz.belongsToMany(User, {through: 'Favourite'});
+
 // Importar definicion de la tabla Comment
 var comment_path = path.join(__dirname,'comment');
 var Comment = sequelize.import(comment_path);
@@ -62,8 +69,8 @@ sequelize.sync().then(function() {
         Quiz.count().then(function (count){
           if(count === 0) {   // la tabla se inicializa solo si está vacía
             Quiz.bulkCreate( 
-              [ {pregunta: 'Capital de Italia',   respuesta: 'Roma', UserId: 2}, // estos quizes pertenecen al usuario pepe (2)
-                {pregunta: 'Capital de Portugal', respuesta: 'Lisboa', UserId: 2}
+              [ {pregunta: 'Capital de Italia',   respuesta: 'Roma', UserId: 1}, // estos quizes pertenecen al usuario pepe (2)
+                {pregunta: 'Capital de Portugal', respuesta: 'Lisboa', UserId: 1}
               ]
             ).then(function(){console.log('Base de datos (tabla quiz) inicializada')});
           };
