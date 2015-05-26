@@ -1,3 +1,5 @@
+var tiempo;
+var aux;
 // MW de autorización de accesos HTTP restringidos
 exports.loginRequired = function(req, res, next){
     if (req.session.user) {
@@ -5,6 +7,23 @@ exports.loginRequired = function(req, res, next){
     } else {
         res.redirect('/login');
     }
+};
+
+// MW de comproación de sesión
+exports.tiempo = function(req, res, next){
+if (req.session.user) {
+    aux = new Date();
+    tiempo = new Date(req.session.user.time);
+    if ((aux - time)>120000) {
+	delete req.session.user;
+        res.redirect('/login');       
+    } else {
+	req.session.user.time = aux;
+	next();
+    }
+} else  {
+	next();
+  }
 };
 
 // Get /login   -- Formulario de login
@@ -20,7 +39,7 @@ exports.create = function(req, res) {
 
     var login     = req.body.login;
     var password  = req.body.password;
-
+    time = new Date();
     var userController = require('./user_controller');
     userController.autenticar(login, password, function(error, user) {
 
@@ -32,7 +51,7 @@ exports.create = function(req, res) {
 
         // Crear req.session.user y guardar campos   id  y  username
         // La sesión se define por la existencia de:    req.session.user
-        req.session.user = {id:user.id, username:user.username};
+        req.session.user = {id:user.id, time:tiempo, username:user.username};
 
         res.redirect(req.session.redir.toString());// redirección a path anterior a login
     });

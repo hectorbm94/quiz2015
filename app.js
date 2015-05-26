@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var partials = require('express-partials');
 var methodOverride = require('method-override');
 var session = require('express-session');
+var sessionController = require('./controllers/session_controller');
 
 var routes = require('./routes/index');
 
@@ -41,7 +42,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.use('/', routes);
+app.use('/', sessionController.tiempo, routes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
