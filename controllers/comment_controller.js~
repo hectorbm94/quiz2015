@@ -34,7 +34,7 @@ exports.create = function(req, res) {
         res.render('comments/new.ejs', {comment: comment, errors: err.errors});
       } else {
         comment // save: guarda en DB campo texto de comment
-        .save();
+        .save()
         .then( function(){ 
 	res.redirect('/quizes/'+req.params.quizId)
 	//next();
