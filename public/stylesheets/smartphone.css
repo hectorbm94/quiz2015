@@ -6,3 +6,4 @@ h2 span, section h3, label.rem { display: none; }
 body                { font-size: xx-large; }
 button, input       { font-size: x-large; }
 footer              { font-size: large; }
+.quiz_img { float: none; } 
