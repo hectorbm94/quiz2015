@@ -17,8 +17,11 @@ exports.load = function(req, res, next, userId,quizId) {
 
 // GET /users/:userId/favourites
 exports.index = function(req, res) {  
-
-   models.Favourites.findAll({ where:{UserId: Number(req.params.userId)}}).then(
+  var options = {};
+  if (req.session.user) {
+    options.where = {UserId:req.user.id}
+  }
+   models.Favourites.findAll(options).then(
      function(quizes) {
        res.render('quizes/index.ejs', {quizes: quizes, errors: []})});
 };
@@ -31,9 +34,13 @@ exports.delete = function(req, res){
 
 //FAV
 exports.fav = function(req, res){
-	//req.body.quiz.UserId = req.session.user.id;
+     var options = {};
+     options.where = {id:req.quiz.id}
+     models.Quiz.findAll(options).then(
+     function(quiz) {
 	var fav = models.Favourites.build(	//crea objeto fav
-    {UserId: req.session.user.id, QuizId:req.params.quizId}
-  );
-  fav.save({fields: ["UserId", "QuizId"]}).then( function(){res.redirect('/quizes')})
+    	{UserId: req.user.id, QuizId:quiz[0].id, pregunta: quiz[0].pregunta}
+     );
+  fav.save().then( function(){res.redirect('/quizes')})
+     });
 };
