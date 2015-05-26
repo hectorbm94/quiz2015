@@ -55,16 +55,15 @@ sequelize.sync().then(function() {
   User.count().then(function (count){
     if(count === 0) {   // la tabla se inicializa solo si está vacía
       User.bulkCreate( 
-        [ {username: 'admin',   password: '1234', isAdmin: true},
-          {username: 'hector',   password: '0000'} // el valor por defecto de isAdmin es 'false'
+        [ {username: 'admin',   password: '1234', isAdmin: true}
         ]
       ).then(function(){
         console.log('Base de datos (tabla user) inicializada');
         Quiz.count().then(function (count){
           if(count === 0) {   // la tabla se inicializa solo si está vacía
             Quiz.bulkCreate( 
-              [ {pregunta: 'Capital de Italia',   respuesta: 'Roma', UserId: 2}, // estos quizes pertenecen al usuario pepe (2)
-                {pregunta: 'Capital de Portugal', respuesta: 'Lisboa', UserId: 2}
+              [ {pregunta: 'Capital de Italia',   respuesta: 'Roma', UserId: 1}, // estos quizes pertenecen al usuario pepe (2)
+                {pregunta: 'Capital de Portugal', respuesta: 'Lisboa', UserId: 1}
               ]
             ).then(function(){console.log('Base de datos (tabla quiz) inicializada')});
           };
