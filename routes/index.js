@@ -54,8 +54,8 @@ router.post('/quizes/:quizId(\\d+)/comments', commentController.create);
 router.get('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/publish',  sessionController.loginRequired, commentController.ownershipRequired, commentController.publish);
 
 // Definición de estadisticas
-//router.get('/quizes/stadistics', stadisticsController.datos);
-router.get('/statistics', statisticsController.index);
+router.get('/quizes/stadistics', stadisticsController.datos);
+//router.get('/statistics', statisticsController.index);
 
 // Busqueda
 router.get('/search', quizController.busqueda);

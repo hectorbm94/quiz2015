@@ -30,12 +30,12 @@ exports.datos = function(req, res) {
 	}).catch(function(error){next(error);})
 };
 
-exports.index = function(req, res){		
-	/*models.Quiz.findAll().then(function(quizes){
+/*exports.index = function(req, res){		
+	models.Quiz.findAll().then(function(quizes){
 		res.render('statistics/index', { quizes: quizes, errors: [] });
-	}).catch(function(error) { next(error); });	*/
+	}).catch(function(error) { next(error); });	
 	
 	models.Quiz.findAll({ include: [{ model: models.Comment }] }).then(function(quizes){				
 		res.render('statistics/index', { quizes: quizes, errors: [] });		
 	}).catch(function(error) { next(error); });	
-};
+};*/
