@@ -1,0 +1,27 @@
+<style>
+    ul { padding: 0px; margin: 0px;text-align: left;padding-left: 50px; }
+	ul.cir {list-style-type: circle;}
+</style>
+<h3>Estadisticas del sistema.</h3>
+<br />
+<ul class="cir">
+	<li>Número de Preguntas: <%= quizes.length %></li>	
+	<% var cant=0;
+		for (index in quizes ) { 
+		 for (index2 in quizes[index].Comments ) {  
+			cant++;
+		 }
+	    } %>
+	<li>Número de Comentarios Totales: <%= cant %></li>	
+	<li>El Número Medio de Comentarios por Pregunta: <%= (cant/quizes.length) %></li>
+<% var npSComent=0, npCComent=0;
+	for (index in quizes ) { 
+	    if(quizes[index].Comments.length > 0) {
+		   npCComent++;
+		}else{
+		   npSComent++;
+		}
+	} 
+%>	<li>El Número de Preguntas sin Comentarios: <%= npSComent %></li>	
+	<li>El Número de Preguntas con Comentarios: <%= npCComent %></li>	
+<ul>
